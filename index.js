@@ -1,7 +1,5 @@
-let words = [
-  "An introduction to sensors, microcontrollers and how they fit into the larger context of the Internet of Things (IoT). This session will include an overview of the various sensors and outputs that are available. We’ll spend a good amount of time talking about what microcontrollers are, how programming them differs from desktop/web programming and how they are used to connect to sensors and networks. The second half will be spent looking at actual code from several examples using the Arduino platform.",
-  "Microsoft Cognitive Services enables developers with powerful set of APIs that can be used to develop intelligent apps with powerful algorithms, using just a few lines of code. The API enables developers to easily add intelligent features – such as emotion and video detection; facial, speech and vision recognition; and speech and language understanding – into their applications with minimum effort.",
-  "This session will show case how to get started with the API and how it can be integrated with your application. The session will also discuss the CNTK that runs behind the scene.",
+let descriptions = [
+  "An introduction to sensors, microcontrollers and how they fit into the larger context of the Internet of Things (IoT). This session will include an overview of the various sensors and outputs that are available. We’ll spend a good amount of time talking about what microcontrollers are, how programming them differs from desktop/web programming and how they are used to connect to sensors and networks. The second half will be spent looking at actual code from several examples using the Arduino platform. Microsoft Cognitive Services enables developers with powerful set of APIs that can be used to develop intelligent apps with powerful algorithms, using just a few lines of code. The API enables developers to easily add intelligent features – such as emotion and video detection; facial, speech and vision recognition; and speech and language understanding – into their applications with minimum effort. This session will show case how to get started with the API and how it can be integrated with your application. The session will also discuss the CNTK that runs behind the scene.",
   "A typical web application relies on Open Source code written by thousands of people, and they are a lot like you! Come learn the overall workflow to fix the bugs that annoy you, add the features you want, and get help along the way. We'll do some hands-on activities, so bring a laptop.",
   "Contributing to Open Source is a great way to learn new things, find a technical mentor, build up your network, and stay current on new technology. By the end of this session, you'll have everything you need to get started or re-started.",
   "The OWASP Top Ten Proactive Controls 2018 is a list of security techniques to include in every software development project. The order is by importance, with control number 1 being the most important. The Proactive Controls is a document written by developers for developers to assist them in getting started with secure development. The controls covered will be:",
@@ -66,7 +64,7 @@ let words = [
   "This session saves you from all those stackoverflow.com downvotes and 'did you even debug this?' comments. Bring a laptop and play along! Your browser tools are enough to try out many of the presented concepts.",
   "WebAssembly has huge implications for the web— it provides a way to run code written in multiple languages on the web at near-native speed, with client apps running on the web that previously couldn’t have done so François Tanguay, CEO at nventive, will discuss how to build rich apps with WebAssembly and present UNO Platform, a new UI framework that compiles and runs C# code that allows for the creation of rich UI apps that can target mobile and web simultaneously. You will learn, in this talk, how to reuse .NET Standard application and C# code to make your applications run across all browsers and all OS with WASM. In this session, not only you will be able to see the magic happen in front of your very eyes, you will also learn how to create apps using C# and XAML that can work on WASM but also on iOS, Android, Windows.",
   "Is your team using Test-Driven Development, the Agile methodology, and maybe even functional programming, but still producing more bugs than you’d like? Would you like to know why? Larry has analyzed hundreds of defects that occurred in a real-world system and was so surprised by what he found that he wanted to share it at Code Camp. Come to hear causes that are more common -- and solutions that are more simple -- than you might have imagined.",
-  "Create new business opportunities, improve existing systems and create new channels for your customers.  Azure API Management is a turnkey solution for managing, securing, and analyzing APIs allowing you to monetize your existing data and services.  APIs can be hosted anywhere, not just in Azure.  During this session we will cover a brief introduction to API Management along with how to import and publish your first API.  This will allow you to easily secure and protect your API from abuse and overuse using an API key along with IP filtering, quotas and rate limits.",
+  "Create new business opportunities, improve existing systems and create new channels for your customers. Azure API Management is a turnkey solution for managing, securing, and analyzing APIs allowing you to monetize your existing data and services. APIs can be hosted anywhere, not just in Azure. During this session we will cover a brief introduction to API Management along with how to import and publish your first API. This will allow you to easily secure and protect your API from abuse and overuse using an API key along with IP filtering, quotas and rate limits.",
   "Most companies are faced with the ever-growing big data problem. It is estimated that there will be 40 zettabytes of new data generated between 2012 to 2020. See the computer world article for details. Most of this data will be generated by sensors and machines. However, only a small portion of the data is available for users. How can IT professionals help business lines gather and process data from various sources? There have been two schools of thought on how to solve this problem.",
   "Schema on write is represented by the traditional relational database. Raw data is ingested by an extract, transform and load (ETL) process. The data is stored in tables that enforce integrity and allow for quick retrieval.",
   "Only a small portion of the total data owned by the company resides in the database.",
@@ -77,6 +75,106 @@ let words = [
   "Threat modeling should be part of your secure software design process. In this session we will look at some of the latest advances in threat modeling integrated with Agile Development processes by using User Stories and Abuser Stories. This process is iterative and meant to keep step with Agile Development practices. By enumerating Threats against User Stories / Abuser Stories, you are not threat modeling an entire/massive system, but going granular by enumerating threats against relevant user stories. Finally, you will see how this process facilitates the creation of multiple segues into Security Test Cases and Mitigation Plans. You will see how this process works with an automated approach to security test cases."
 ]
 
-words.forEach(word => {
-  console.log(word)
+let conjunctions = ['and', 'in', 'at', 'a', 'of', 'is', 'this', 'when', 'will', 'to', 'the', 'with', 'for', 'be']
+
+// remove punctuation and useless conjunctions
+let formattedDescriptions = descriptions.map(description => {
+  let formattedDescription = description.toLowerCase().replace(/[.,\/?–#!$'"%\^&\*;:{}=\-_`~()]/g, "").replace(/\band\b|\bin\b|\bat\b|\ba\b|\bof\b|\byour\b|\bis\b|\bthis\b|\bwhen\b|\bwill\b|\bto\b|\bthe\b|\bwith\b|\bfor\b|\bbe\b|\byour\b/g, "").replace(/\s{2,}/g, " ").split(" ")
+  return formattedDescription
 })
+
+// flatten the array of split descriptions
+let finalWords = flatten(formattedDescriptions)
+
+// total the number of words
+let wordCounts = {}
+finalWords.forEach(
+  word => { 
+    wordCounts[word] = (wordCounts[word] || 0) + 1 // wordCounts[word] || 0 returns
+  }
+)
+
+// get it into a chartable data format
+let wordData = []
+Object.keys(wordCounts).forEach(function (key, index) {
+  if (wordCounts[key] > 5) {
+    wordData.push({
+      word: key,
+      count: wordCounts[key]
+    })
+  }
+})
+
+let width = 1000,
+  height = 1000
+
+let svg = d3.select('#word-chart')
+  .append('svg')
+  .attr('viewBox', '0 0' + ' ' + width + ' ' + height)
+
+let color = d3.scaleSequential(d3.interpolateYlGnBu).domain([0, 200])
+
+let nodes = wordData
+
+let simulation = d3.forceSimulation(wordData) // creates simulation
+  .force('charge', d3.forceManyBody().strength(-0.75)) // applies attraction or repelling force
+  .force('center', d3.forceCenter(width / 2, height / 2)) // pulls points towards a center
+  .force('collision', d3.forceCollide().radius(function (d) {
+    return d.count + 10
+  }))
+  .on('tick', ticked)
+
+let bubbles = svg.selectAll('.word-bubble')
+  .data(wordData)
+  .enter().append('g').attr('class', 'word-bubble')
+  .append('circle')
+  .attr('r', function (d) {
+    return d.count
+  })
+  .style('fill', function (d, i) {
+    return color(i)
+  })
+
+let labels = d3.selectAll('.word-bubble')
+  .append('g')
+  .attr('class', 'word-label')
+
+let wordLabel = labels.append('text')
+  .attr('x', function (d) {
+    return d.x
+  })
+  .attr('y', function (d) {
+    return d.y
+  })
+  .attr('dy', 4)
+  .text(function (d) {
+    return d.word
+  })
+  .attr('text-anchor', 'middle')
+  .attr('class', 'word-label-text')
+
+function ticked() {
+  bubbles.attr('cx', function (d) {
+    return d.x
+  })
+    .attr('cy', function (d) {
+      return d.y
+    })
+
+  wordLabel.attr('x', function (d) {
+    return d.x
+  })
+    .attr('y', function (d) {
+      return d.y
+    })
+
+  bubbles.exit().remove()
+  labels.exit().remove()
+  wordLabel.exit().remove()
+}
+
+function flatten(array) {
+  return array.reduce((acc, val) => acc.concat(val), [])
+}
+
+
