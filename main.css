@@ -1,0 +1,29 @@
+body {
+    padding-top: 1%;
+    font-family: 'Nunito', sans-serif;
+}
+
+#word-chart {
+    position: relative;
+    top: 400px;
+}
+
+#dygraphs-example {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    left: 10px;
+    right: 10px;
+    top: 40px;
+    bottom: 10px;
+}
+
+.hottest-annotation {
+    color: #dd421d !important;
+    border-color: #dd421d !important;
+}
+
+.coldest-annotation {
+    color: #29bac1 !important;
+    border-color: #29bac1 !important;
+}

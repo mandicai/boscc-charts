@@ -75,11 +75,11 @@ let descriptions = [
   "Threat modeling should be part of your secure software design process. In this session we will look at some of the latest advances in threat modeling integrated with Agile Development processes by using User Stories and Abuser Stories. This process is iterative and meant to keep step with Agile Development practices. By enumerating Threats against User Stories / Abuser Stories, you are not threat modeling an entire/massive system, but going granular by enumerating threats against relevant user stories. Finally, you will see how this process facilitates the creation of multiple segues into Security Test Cases and Mitigation Plans. You will see how this process works with an automated approach to security test cases."
 ]
 
-let conjunctions = ['and', 'in', 'at', 'a', 'of', 'is', 'this', 'when', 'will', 'to', 'the', 'with', 'for', 'be']
+let conjunctions = ['and', 'in', 'at', 'a', 'of', 'is', 'this', 'when', 'will', 'to', 'the', 'with', 'for', 'be', 'that', 'it']
 
 // remove punctuation and useless conjunctions
 let formattedDescriptions = descriptions.map(description => {
-  let formattedDescription = description.toLowerCase().replace(/[.,\/?–#!$'"%\^&\*;:{}=\-_`~()]/g, "").replace(/\band\b|\bin\b|\bat\b|\ba\b|\bof\b|\byour\b|\bis\b|\bthis\b|\bwhen\b|\bwill\b|\bto\b|\bthe\b|\bwith\b|\bfor\b|\bbe\b|\byour\b/g, "").replace(/\s{2,}/g, " ").split(" ")
+  let formattedDescription = description.toLowerCase().replace(/[.,\/?–#!$'"%\^&\*;:{}=\-_`~()]/g, "").replace(/\band\b|\bin\b|\bat\b|\ba\b|\bof\b|\byour\b|\bis\b|\bthis\b|\bwhen\b|\bwill\b|\bto\b|\bthe\b|\bwith\b|\bfor\b|\bbe\b|\byour\b|\bthat\b|\bit\b/g, "").replace(/\s{2,}/g, " ").split(" ")
   return formattedDescription
 })
 
@@ -97,7 +97,7 @@ finalWords.forEach(
 // get it into a chartable data format
 let wordData = []
 Object.keys(wordCounts).forEach(function (key, index) {
-  if (wordCounts[key] > 5) {
+  if (wordCounts[key] > 10 && key != '') {
     wordData.push({
       word: key,
       count: wordCounts[key]
@@ -105,22 +105,22 @@ Object.keys(wordCounts).forEach(function (key, index) {
   }
 })
 
-let width = 1000,
-  height = 1000
+let width = 750,
+  height = 750
 
 let svg = d3.select('#word-chart')
   .append('svg')
   .attr('viewBox', '0 0' + ' ' + width + ' ' + height)
 
-let color = d3.scaleSequential(d3.interpolateYlGnBu).domain([0, 200])
+let color = d3.scaleSequential(d3.interpolateYlGnBu).domain([0, 100])
 
 let nodes = wordData
 
 let simulation = d3.forceSimulation(wordData) // creates simulation
-  .force('charge', d3.forceManyBody().strength(-0.75)) // applies attraction or repelling force
+  .force('charge', d3.forceManyBody().strength(0.75)) // applies attraction or repelling force
   .force('center', d3.forceCenter(width / 2, height / 2)) // pulls points towards a center
   .force('collision', d3.forceCollide().radius(function (d) {
-    return d.count + 10
+    return d.count + 15
   }))
   .on('tick', ticked)
 
@@ -176,5 +176,50 @@ function ticked() {
 function flatten(array) {
   return array.reduce((acc, val) => acc.concat(val), [])
 }
+
+// DYGRAPHS
+// add full date and convert values to numbers
+d3.dsv(';', 'data/boston_weather_data.csv', function(d) {
+  return {
+    'FullDate': new Date(d.Year + '-' + d.Month + '-' + d.Day + ' ' +  d.Hour + ':' + d.Minute),
+    'Temperature [2 m above gnd]': +d['Temperature  [2 m above gnd]']
+  }
+}).then(data => {
+  let formattedData = data.map(d => {
+    return [d['FullDate'], d['Temperature [2 m above gnd]']]
+  })
+
+  let g = new Dygraph(
+    document.getElementById('dygraphs-example'),
+    formattedData,
+    {
+      legend: 'always',
+      animatedZooms: true,
+      title: 'Boston Temperatures (1 week)',
+      labels: ['Date', 'Temperature [2 m above gnd]'],
+      color: '#d3b45b'
+    })
+
+  g.ready(function () {
+    g.setAnnotations([
+      {
+        series: 'Temperature [2 m above gnd]',
+        x: Date.parse('2018-10-20 14:00'),
+        shortText: 'H',
+        text: 'Hottest Day',
+        cssClass: 'hottest-annotation',
+        tickColor: '#dd3710'
+      },
+      {
+        series: 'Temperature [2 m above gnd]',
+        x: Date.parse('2018-10-22 7:00'),
+        shortText: 'C',
+        text: 'Coldest Day',
+        cssClass: 'coldest-annotation',
+        tickColor: '#29bac1'
+      }
+    ])
+  })
+})
 
 
