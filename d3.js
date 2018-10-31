@@ -60,6 +60,19 @@ d3.json('data/boscc_descriptions.json').then(descriptions => {
     .style('fill', function (d, i) {
       return color(i)
     })
+    .style('stroke', function (d) {
+      if (d.word === 'you' || d.word === 'azure' || d.word === 'data') {
+        return 'black'
+      }
+    })
+    .style('stroke-width', '2px')
+    .style('opacity', function (d) {
+      if (d.word === 'you' || d.word === 'azure' || d.word === 'data') {
+        return 1.0
+      } else {
+        return 0.5
+      }
+    })
 
   let labels = d3.selectAll('.word-bubble')
     .append('g')
@@ -78,6 +91,13 @@ d3.json('data/boscc_descriptions.json').then(descriptions => {
     })
     .attr('text-anchor', 'middle')
     .attr('class', 'word-label-text')
+    .style('opacity', function (d) {
+          if (d.word === 'you' || d.word === 'azure' || d.word === 'data') {
+            return 1.0
+          } else {
+            return 0.5
+          }
+    })
 
   function ticked() {
     bubbles.attr('cx', function (d) {
@@ -99,7 +119,7 @@ d3.json('data/boscc_descriptions.json').then(descriptions => {
     wordLabel.exit().remove()
   }
 
-  function flatten(array) {
+  function flatten (array) {
     return array.reduce((acc, val) => acc.concat(val), [])
   }
 })

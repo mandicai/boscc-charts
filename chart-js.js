@@ -71,6 +71,5 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
     })
 
 function sortCopy(arr) {
-    console.log(arr.length)
     return arr.slice(0).sort(function (a, b) { return b.y - a.y })
 }
