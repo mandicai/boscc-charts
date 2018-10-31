@@ -1,5 +1,6 @@
 // DYGRAPHS
 // add full date and convert values to numbers
+// need to make position of chart absolute to resize
 d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
     return {
         'FullDate': new Date(d.Year + '-' + d.Month + '-' + d.Day + ' ' + d.Hour + ':' + d.Minute),
