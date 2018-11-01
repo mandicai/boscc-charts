@@ -18,7 +18,8 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
             animatedZooms: true,
             title: 'Boston Temperatures (1 week)',
             labels: ['Date', 'Temperature [2 m above gnd]'],
-            color: '#d3b45b',
+            color: '#d0cdfa',
+            strokeWidth: 4.0,
             includeZero: true
         })
 
@@ -29,7 +30,7 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
                 shortText: 'H',
                 text: 'Hottest Day',
                 cssClass: 'hottest-annotation',
-                tickColor: '#dd3710'
+                tickColor: '#dd1d6d'
             },
             {
                 series: 'Temperature [2 m above gnd]',

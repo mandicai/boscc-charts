@@ -17,7 +17,7 @@ p {
 
 .line {
     fill: none;
-    stroke: #d3b45b;
+    stroke: #d0cdfa;
     stroke-width: 7px;
 }
 
@@ -53,8 +53,8 @@ p {
 }
 
 .hottest-annotation {
-    color: #dd421d !important;
-    border-color: #dd421d !important;
+    color: #dd1d6d !important;
+    border-color: #dd1d6d !important;
 }
 
 .coldest-annotation {

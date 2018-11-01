@@ -109,7 +109,7 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
         x: x(maxTemp['FullDate']),
         y: y(maxTemp['Temperature [2 m above gnd]']),
         dy: 200,
-        color: '#dd421d'
+        color: '#dd1d6d'
     }, {
         note: {
             title: 'Coldest',

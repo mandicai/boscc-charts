@@ -22,7 +22,7 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
             if (datum[1] === minMax[1]) {
                 datum[2] = 'H'
                 datum[3] = 'Hottest time'
-                datum[4] = 'color: #dd421d; stroke: none'
+                datum[4] = 'color: #dd1d6d; stroke: none'
             }
         })
 
@@ -41,7 +41,7 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
                 title: 'Boston Temperatures (1 week)',
                 width: 1200,
                 height: 800,
-                colors: ['#d3b45b'],
+                colors: ['#d0cdfa'],
                 fontName: 'Nunito',
                 hAxis: {
                     format: 'd MMM'

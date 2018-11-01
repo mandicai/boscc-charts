@@ -15,9 +15,9 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
             data: {
                 datasets: [{
                     label: "Temperature [2 m above gnd]",
-                    backgroundColor: '#d3b45b',
+                    backgroundColor: '#d0cdfa',
                     fill: false,
-                    borderColor: '#d3b45b',
+                    borderColor: '#d0cdfa',
                     data: temperatureData,
                 }]
             },
@@ -50,7 +50,7 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
                         mode: 'vertical',
                         scaleID: 'x-axis-0',
                         value: maxTemp.x,
-                        borderColor: '#dd421d',
+                        borderColor: '#dd1d6d',
                         borderWidth: 1,
                         label: {
                             enabled: true,
