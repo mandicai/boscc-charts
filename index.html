@@ -14,12 +14,28 @@
 </head>
 
 <body>
-    <div class="container">
-        <p>Double click the chart reset</p>
-        <div id="dygraphs-example"></div>
-        <div id="google-charts-example"></div>
-        <canvas id="chart-js-example"></canvas>
+    <div id="tooltip"></div>
+    <div class="container" style="margin:auto;">
+        <h1>Visualizing your data in Javascript</h1>
+        <p>We have <b>more</b> access to <b>more</b> information than ever before. Correctly visualizing these massive quantities of data is very important to our understanding of the world.</p>
         <div id="word-chart"></div>
+        <div class="example">
+            <h1>D3.js</h1>
+            <div id="d3-example"></div>
+        </div>
+        <div class="dygraphs-example">
+            <h1>Dygraphs</h1>
+            <p>Double click the chart reset</p>
+            <div id="dygraphs-example"></div>
+        </div>
+        <div class="example">
+            <h1>Google Charts</h1>
+            <div id="google-charts-example"></div>
+        </div>
+        <div class="example">
+            <h1>Chart.js</h1>
+            <canvas id="chart-js-example"></canvas>
+        </div>
     </div>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -29,7 +45,9 @@
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
     <script src="resources/chartjs-plugin-annotation.min.js"></script>
-    <script src="d3.js"></script>
+    <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+    <script src="d3-bubble.js"></script>
+    <script src="d3-example.js"></script>
     <script src="dygraphs.js"></script>
     <script src="google-charts.js"></script>
     <script src="chart-js.js"></script>

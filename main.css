@@ -1,11 +1,55 @@
 body {
-    padding-top: 1%;
+    padding-top: 5%;
     font-family: 'Nunito', sans-serif;
 }
 
+h1 {
+    margin: 2% 0;
+}
+
+p {
+    font-size: 20px;
+}
+
+.example {
+    margin: 5% 0;
+}
+
+.line {
+    fill: none;
+    stroke: #d3b45b;
+    stroke-width: 7px;
+}
+
+.grid .tick {
+    color: #ccc;
+}
+
+.grid .domain {
+    display: none;
+}
+
+#tooltip {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    min-width: 30px;
+    min-height: 30px;
+    padding: 5px;
+    font-size: 100%;
+    background: #fff;
+    pointer-events: none;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+    opacity: 0.9;
+}
+
+.dygraphs-example {
+    margin-bottom: 10%;
+}
+
 #dygraphs-example {
-    width: 50%;
-    height: 50%;
+    margin: auto;
+    height: 600px;
 }
 
 .hottest-annotation {

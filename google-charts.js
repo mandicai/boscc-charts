@@ -39,12 +39,11 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
 
             let options = {
                 title: 'Boston Temperatures (1 week)',
-                width: 600,
-                height: 400,
+                width: 1200,
+                height: 800,
                 colors: ['#d3b45b'],
                 fontName: 'Nunito',
                 hAxis: {
-                    title: 'Date',
                     format: 'd MMM'
                 }
             }
