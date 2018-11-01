@@ -30,6 +30,12 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
                         time: {
                             unit: 'day'
                         }
+                    }],
+                    yAxes: [{
+                        id: 'y-axis-0',
+                        ticks: {
+                            beginAtZero: true
+                        }
                     }]
                 },
                 title: {
