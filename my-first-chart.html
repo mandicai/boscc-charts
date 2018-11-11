@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>BOSCC Charts</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div id="my-first-chart"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.js"></script>
+    <script>
+        let data = [
+                [1,10,100],
+                [2,20,80],
+                [3,50,60],
+                [4,70,80]
+              ]
+
+        let g = new Dygraph(
+        document.getElementById('my-first-chart'),
+        data, {
+            legend: 'always',
+            animatedZooms: true,
+            title: 'My First Chart',
+            labels: [ 'x', 'A', 'B' ],
+            color: '#d0cdfa',
+            strokeWidth: 4.0,
+            includeZero: true
+        })
+    </script>
+</body>
+</html>
+
