@@ -61,16 +61,16 @@ d3.json('data/boscc_descriptions.json').then(descriptions => {
       return color(i)
     })
     .style('stroke', function (d) {
-      if (d.word === 'you' || d.word === 'azure' || d.word === 'data') {
+      if (d.word === 'services' || d.word === 'azure' || d.word === 'data' || d.word === 'web' || d.word === 'security') {
         return 'black'
       }
     })
     .style('stroke-width', '2px')
     .style('opacity', function (d) {
-      if (d.word === 'you' || d.word === 'azure' || d.word === 'data') {
+      if (d.word === 'services' || d.word === 'azure' || d.word === 'data' || d.word === 'web' || d.word === 'security') {
         return 1.0
       } else {
-        return 0.5
+        return 0.2
       }
     })
 
@@ -92,10 +92,10 @@ d3.json('data/boscc_descriptions.json').then(descriptions => {
     .attr('text-anchor', 'middle')
     .attr('class', 'word-label-text')
     .style('opacity', function (d) {
-          if (d.word === 'you' || d.word === 'azure' || d.word === 'data') {
+          if (d.word === 'services' || d.word === 'azure' || d.word === 'data' || d.word === 'web' || d.word === 'security') {
             return 1.0
           } else {
-            return 0.5
+            return 0.2
           }
     })
 
