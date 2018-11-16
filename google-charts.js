@@ -13,6 +13,8 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
     }).then(temperatureData => {
         let minMax = d3.extent(temperatureData, function (d) { return d[1]})
         
+        let dateRange = ' (' + moment(temperatureData[0][0]).format('MM/DD/YY') + ' to ' + moment(temperatureData[temperatureData.length - 1][0]).format('MM/DD/YY') + ')'
+
         temperatureData.forEach(datum => {
             if (datum[1] === minMax[0]) {
                 datum[2] = 'C'
@@ -31,14 +33,14 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
         function drawChart() {
             let data = new google.visualization.DataTable()
             data.addColumn('date', 'Date')
-            data.addColumn('number', 'Temperature [2 m above gnd]')
+            data.addColumn('number', 'Temperature °F [2 m above gnd]')
             data.addColumn({type: 'string', role: 'annotation'})
             data.addColumn({type: 'string', role: 'annotationText'})
             data.addColumn({type: 'string', role: 'style'})
             data.addRows(temperatureData)
 
             let options = {
-                title: 'Boston Temperatures (1 week)',
+                title: 'Boston Temperatures' + dateRange,
                 width: 1200,
                 height: 800,
                 colors: ['#d0cdfa'],

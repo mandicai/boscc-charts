@@ -18,22 +18,24 @@ let y = d3.scaleLinear().range([height, 0])
 
 let tempLine = d3.line()
     .x(function (d) {
-        return x(d['FullDate'])
+        return x(d.x)
     })
     .y(function (d) {
-        return y(d['Temperature [2 m above gnd]'])
+        return y(d.y)
     })
 
-let bisectDate = d3.bisector(function (d) { return d['FullDate'] }).left
+let bisectDate = d3.bisector(function (d) { return d.x }).left
 
 d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
         return {
-            'FullDate': new Date(d.Year + '-' + d.Month + '-' + d.Day + ' ' + d.Hour + ':' + d.Minute),
-            'Temperature [2 m above gnd]': +d['Temperature  [2 m above gnd]']
+            'x': new Date(d.Year + '-' + d.Month + '-' + d.Day + ' ' + d.Hour + ':' + d.Minute),
+            'y': +d['Temperature  [2 m above gnd]']
         }
 }).then(temperatureData => {
-    x.domain(d3.extent(temperatureData, function(d) { return d['FullDate'] })).nice()
-    y.domain([0, d3.max(temperatureData, function(d) { return d['Temperature [2 m above gnd]'] })])
+    x.domain(d3.extent(temperatureData, function(d) { return d.x })).nice()
+    y.domain([0, d3.max(temperatureData, function(d) { return d.y })])
+
+    let dateRange = ' (' + moment(temperatureData[0].x).format('MM/DD/YY') + ' to ' + moment(temperatureData[temperatureData.length - 1].x).format('MM/DD/YY') + ')'
 
     // line graph
     g.append('g')
@@ -77,23 +79,37 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
             i = bisectDate(temperatureData, x0),
             d0 = temperatureData[i - 1],
             d1 = temperatureData[i]
-            d = x0 - d0['Temperature [2 m above gnd]'] > d1['Temperature [2 m above gnd]'] - x0 ? d1 : d0
+            d = x0 - d0.x > d1.x - x0 ? d1 : d0
 
-            focus.attr('transform', 'translate(' + x(d['FullDate']) + ',' + y(d['Temperature [2 m above gnd]']) + ')')
-            focus.select('text').text(d['Temperature [2 m above gnd]'])
+            focus.attr('transform', 'translate(' + x(d.x) + ',' + y(d.y) + ')')
+            focus.select('text').text(d.y)
     }
     
     // title
     g.append('text')
         .attr('transform', 'translate(' + width/2 + ',' + -20 + ')')
-        .text('Boston Temperatures (1 week)')
+        .text('Boston Temperatures' + dateRange)
         .attr('text-anchor', 'middle')
     
     function sortCopy(arr) {
         return arr.slice(0).sort(function (a, b) {
-            return b['Temperature [2 m above gnd]'] - a['Temperature [2 m above gnd]']
+            return b.y - a.y
         })
     }
+
+    let legend = g.append('g')
+        .attr('transform', 'translate(' + (width - 225) + ',' + '-10)')
+        
+    legend.append('line')
+        .attr('x0', 0)
+        .attr('x1', 20)
+        .attr('transform', 'translate(0, -5)')
+        .style('stroke', '#d0cdfa')
+        .style('stroke-width', '5px')
+        
+    legend.append('text')
+        .attr('transform', 'translate(' + 30 + ',' + '0)')
+        .text('Temperature °F [2 m above gnd]')
 
     let maxTemp = sortCopy(temperatureData)[0]
     let minTemp = sortCopy(temperatureData)[temperatureData.length - 1]
@@ -106,8 +122,8 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
             radius: 10,
         },
         type: d3.annotationCalloutCircle,
-        x: x(maxTemp['FullDate']),
-        y: y(maxTemp['Temperature [2 m above gnd]']),
+        x: x(maxTemp.x),
+        y: y(maxTemp.y),
         dy: 200,
         color: '#dd1d6d'
     }, {
@@ -118,8 +134,8 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
             radius: 10,
         },
         type: d3.annotationCalloutCircle,
-        x: x(minTemp['FullDate']),
-        y: y(minTemp['Temperature [2 m above gnd]']),
+        x: x(minTemp.x),
+        y: y(minTemp.y),
         dy: 50,
         color: '#29bac1'
     }]
@@ -129,6 +145,6 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
         .annotations(annotations)
 
     g.append('g')
-        .attr('class', 'country-annotation-group')
+        .attr('class', 'temperature-annotation-group')
         .call(makeAnnotations)
 })

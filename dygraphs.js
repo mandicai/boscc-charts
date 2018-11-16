@@ -17,14 +17,16 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
     
     let maxTemp = sortedData[0]
     let minTemp = sortedData[sortedData.length - 1]
+
+     let dateRange = ' (' + moment(formattedData[0][0]).format('MM/DD/YY') + ' to ' + moment(formattedData[formattedData.length - 1][0]).format('MM/DD/YY') + ')'
     
     let g = new Dygraph(
         document.getElementById('dygraphs-example'),
         formattedData, {
             legend: 'always',
             animatedZooms: true,
-            title: 'Boston Temperatures (1 week)',
-            labels: ['Date', 'Temperature [2 m above gnd]'],
+            title: 'Boston Temperatures' + dateRange,
+            labels: ['Date', 'Temperature °F [2 m above gnd]'],
             color: '#d0cdfa',
             strokeWidth: 4.0,
             includeZero: true
@@ -32,7 +34,7 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
 
     g.ready(function () {
         g.setAnnotations([{
-                series: 'Temperature [2 m above gnd]',
+                series: 'Temperature °F [2 m above gnd]',
                 x: Date.parse(maxTemp[0]),
                 shortText: 'H',
                 text: 'Hottest Day',
@@ -40,7 +42,7 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
                 tickColor: '#dd1d6d'
             },
             {
-                series: 'Temperature [2 m above gnd]',
+                series: 'Temperature °F [2 m above gnd]',
                 x: Date.parse(minTemp[0]),
                 shortText: 'C',
                 text: 'Coldest Day',

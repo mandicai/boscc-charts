@@ -8,13 +8,15 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
         let maxTemp = sortCopy(temperatureData)[0]
         let minTemp = sortCopy(temperatureData)[temperatureData.length - 1]
 
+        let dateRange = ' (' + moment(temperatureData[0].x).format('MM/DD/YY') + ' to ' + moment(temperatureData[temperatureData.length - 1].x).format('MM/DD/YY') + ')'
+
         let ctx = document.getElementById('chart-js-example').getContext('2d')
         let chart = new Chart(ctx, {
             type: 'line',
 
             data: {
                 datasets: [{
-                    label: "Temperature [2 m above gnd]",
+                    label: 'Temperature °F [2 m above gnd]',
                     backgroundColor: '#d0cdfa',
                     fill: false,
                     borderColor: '#d0cdfa',
@@ -35,12 +37,12 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
                         id: 'y-axis-0',
                         ticks: {
                             beginAtZero: true
-                        }
+                        },
                     }]
                 },
                 title: {
                     display: true,
-                    text: 'Boston Temperatures (1 week)',
+                    text: 'Boston Temperatures' + dateRange,
                     fontSize: 15
                 },
                 annotation: {
