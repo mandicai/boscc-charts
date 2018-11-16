@@ -11,6 +11,13 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
         return [d['FullDate'], d['Temperature [2 m above gnd]']]
     })
 
+    let sortedData = formattedData.slice().sort(function (a, b) {
+        return b[1] - a[1]
+    })
+    
+    let maxTemp = sortedData[0]
+    let minTemp = sortedData[sortedData.length - 1]
+    
     let g = new Dygraph(
         document.getElementById('dygraphs-example'),
         formattedData, {
@@ -26,7 +33,7 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
     g.ready(function () {
         g.setAnnotations([{
                 series: 'Temperature [2 m above gnd]',
-                x: Date.parse('2018-10-20 14:00'),
+                x: Date.parse(maxTemp[0]),
                 shortText: 'H',
                 text: 'Hottest Day',
                 cssClass: 'hottest-annotation',
@@ -34,7 +41,7 @@ d3.dsv(';', 'data/boston_weather_data.csv', function (d) {
             },
             {
                 series: 'Temperature [2 m above gnd]',
-                x: Date.parse('2018-10-22 7:00'),
+                x: Date.parse(minTemp[0]),
                 shortText: 'C',
                 text: 'Coldest Day',
                 cssClass: 'coldest-annotation',
